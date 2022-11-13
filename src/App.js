@@ -94,14 +94,18 @@ class App extends Component {
     today = yyyy + '-' + mm + '-' + dd;
 
     var pictures = this.state.picture_models;
-    pictures.push({
-      src: document.getElementById("url").value,
-      author: sessionStorage.getItem("username"),
-      createdAt: today,
-      comments: []
-    });
-    this.setState({picture_models: pictures});
+    if(document.getElementById("url").value !== ""){
+      pictures.push({
+        src: document.getElementById("url").value,
+        author: sessionStorage.getItem("username"),
+        createdAt: today,
+        comments: []
+      });
+      this.setState({picture_models: pictures});
+    }
 
+    document.getElementById("url").value = "";
+  
   }
 
   pictureDelete = (pictureIndex) => {
@@ -118,13 +122,17 @@ class App extends Component {
 
     today = yyyy + '-' + mm + '-' + dd;
     var pictures = this.state.picture_models;
-    pictures[pictureIndex]["comments"].push({
-      author: sessionStorage.getItem("username"),
-      comment: document.getElementById("newComment" + pictureIndex).value,
-      createdAt: today
+    if(document.getElementById("newComment" + pictureIndex).value !== ''){
+      pictures[pictureIndex]["comments"].push({
+        author: sessionStorage.getItem("username"),
+        comment: document.getElementById("newComment" + pictureIndex).value,
+        createdAt: today
+      }
+      );
+      this.setState({ picture_models: pictures });
     }
-    );
-    this.setState({ picture_models: pictures });
+    
+    document.getElementById("newComment" + pictureIndex).value = "";
   }
 
   render() {
